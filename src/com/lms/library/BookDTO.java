@@ -1,6 +1,7 @@
 package com.lms.library;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Scanner;
 
 public class BookDTO {
@@ -20,7 +21,11 @@ public class BookDTO {
 		BookDTO.bookList = bookList;
 	}
 
-
+	public void checkIsEmpty(){
+		if (bookList.isEmpty()){
+			System.out.println("Enter a correct name or the book is not added yet.");
+		}
+	}
 	public class BookDAOImp implements BookDAO
 	{
 		@Override
@@ -34,6 +39,7 @@ public class BookDTO {
 		public ArrayList<Book> searchBookByTitle(String bookTitle) {
 			// TODO Auto-generated method stub
 			for (Book title : bookList){
+				checkIsEmpty();
 				if (title.getBookTitle().equals(bookTitle)){
 					System.out.println("Information of book are: ");
 					System.out.println("Author of the book is- "+ title.getBookAuthor());
@@ -51,6 +57,7 @@ public class BookDTO {
 		@Override
 		public ArrayList<Book> searchBookByAuthor(String bookAuthor) {
 			// TODO Auto-generated method stub
+			checkIsEmpty();
 			for (Book author : bookList){
 				if (author.getBookAuthor().equals(bookAuthor)){
 					System.out.println("Information of book are: ");
@@ -69,6 +76,7 @@ public class BookDTO {
 		@Override
 		public Book search(String bookTitle, String bookAuthor, String bookGenre, int bookEdition, int bookPrice) {
 			// TODO Auto-generated method stub
+			checkIsEmpty();
 			for (Book boo: bookList){
 				if (boo.getBookTitle().equals(bookTitle) && boo.getBookAuthor().equals(bookAuthor) && boo.getBookGenre().equals(bookGenre) && boo.getBookEdition() == bookEdition && boo.getBookPrice() == bookPrice ){
 					System.out.println("Information of book are: ");
@@ -88,6 +96,7 @@ public class BookDTO {
 		@Override
 		public boolean updateBook(Book book) {
 			// TODO Auto-generated method stub
+			checkIsEmpty();
 			int index = searchBook(book);
 			if (index == -1){
 				return false;
@@ -137,15 +146,20 @@ public class BookDTO {
 		@Override
 		public boolean removeBook(Book book) {
 			// TODO Auto-generated method stub
+			checkIsEmpty();
+			int index = searchBook(book);
 
-
+			if (index == -1) {
+				return false;
+			}
+			bookList.remove(index);
 			return true;
 		}
 
 		@Override
 		public int searchBook(Book book) {
 			// TODO Auto-generated method stub
-
+			int i =0;
 //			ArrayList<Book> bookList = BookDTO.getBookList();
 			for (Book boo: bookList) {
 				if (boo.getBookTitle().equals(book.getBookTitle()) &&
@@ -153,10 +167,13 @@ public class BookDTO {
 						boo.getBookGenre().equals(book.getBookGenre()) &&
 						boo.getBookEdition() == book.getBookEdition() &&
 						boo.getBookPrice() == book.getBookPrice()) {
+						return i;
 
 				}
+				i++;
 			}
-			return 1;
+			return -1;
+
 		}
 
 	}

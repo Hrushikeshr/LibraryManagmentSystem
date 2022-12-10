@@ -156,17 +156,15 @@ public class Librarian extends Thread implements Serializable{
 			int bookPrice = sc.nextInt();
 
 			ArrayList<Book> bookList = BookDTO.getBookList();
-			for (Book boo: bookList) {
-				if (boo.getBookTitle().equals(bookTitel) && boo.getBookAuthor().equals(bookAuthor) && boo.getBookGenre().equals(bookGenre) && boo.getBookEdition() == bookEdition && boo.getBookPrice() == bookPrice) {
+
 
 					Book b = new Book(bookTitel, bookAuthor, bookGenre, bookEdition, bookPrice);
 
 					System.out.println(bookAccessObject.removeBook(b));
-				}
-				else {
-					System.out.println("Enter a valid details.");
-				}
-			}
+
+
+//			System.out.println(bookAccessObject.removeBook());
+
 
 		}
 		else
